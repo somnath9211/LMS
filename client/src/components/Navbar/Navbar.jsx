@@ -16,14 +16,11 @@ import {
     Sheet,
     SheetClose,
     SheetContent,
-    SheetDescription,
     SheetFooter,
     SheetHeader,
     SheetTitle,
     SheetTrigger,
 } from '../ui/sheet';
-import { Label } from '../ui/label';
-import { Input } from '../ui/input';
 import { Separator } from '@radix-ui/react-dropdown-menu';
 
 
@@ -97,6 +94,7 @@ const MobileNavbar = () => {
                     <DarkMode />
                 </SheetHeader>
                 <Separator className='mr-2' />
+                <DropdownMenuSeparator />
                 <nav className='flex flex-col space-y-4'>
                     <span>My Learning</span>
                     <span>Edit Profile</span>
