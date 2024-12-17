@@ -3,7 +3,7 @@ import React from 'react'
 import Course from './Course';
 
 
-const CourseSkeleton = () => {
+export const CourseSkeleton = () => {
     return (
         <div className=" bg-white shadow-md hover:shadow-lg transition-shadow rounded-lg overflow-hidden">
             <Skeleton className=" w-full h-36" />
