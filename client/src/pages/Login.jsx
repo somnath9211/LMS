@@ -48,12 +48,12 @@ const Login = () => {
             nevigate('/');
         }
         if (registerError) {
-            toast.error(registerData.data.message || "Signup Failed")
+            toast.error(registerError.data.message || "Signup Failed")
         }
         if (loginError) {
-            toast.error(loginData.data.message || "Login Failed")
+            toast.error(loginError.data.message || "Login Failed")
         }
-    }, [loginIsLoading, registerIsLoading, loginData, registerData, loginError, registerError])
+    }, [loginIsLoading, registerIsLoading, loginData, registerData, loginError, registerError, loginIsSuccess, nevigate, registerIsSuccess])
     const handleResistration = async (type) => {
         const inputData = type === "signup" ? signupInput : loginInput;
         const action = type === "signup" ? registerUser : loginUser;
@@ -64,7 +64,7 @@ const Login = () => {
     }
     return (
         <div className="flex items-end justify-center w-full mt-20">
-            <Tabs defaultValue="account" className="w-[400px]">
+            <Tabs defaultValue="login" className="w-[400px]">
                 <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="signup">Signup</TabsTrigger>
                     <TabsTrigger value="login">Login</TabsTrigger>
