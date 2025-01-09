@@ -1,5 +1,5 @@
 import { Label } from '@/components/ui/label';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Select,
     SelectContent,
@@ -10,10 +10,34 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { Loader2 } from 'lucide-react';
+import { useCreateCourseMutation } from '@/features/api/courseApi';
+import { toast } from 'sonner';
 
 
 const AddCourse = () => {
+    const [courseTitel, setCourseTitel] = useState("");
+    const [category, setCategory] = useState("");
     const navigate = useNavigate();
+
+    const [createCourse, { data, error, isSuccess, isLoading }] = useCreateCourseMutation();
+
+    const getSelectedCategory = (value) => {
+        setCategory(value);
+    };
+
+    const createCourseHandler = async () => {
+        await createCourse({ courseTitel, category })
+    };
+
+    // For displaying toast
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success(data.message || "Course created.")
+        }
+    }, [isSuccess, error, data]);
+
     return (
 
         <div className='flex-1 mx-10'>
@@ -24,11 +48,11 @@ const AddCourse = () => {
             <div className=' space-y-4'>
                 <div className=''>
                     <Label>Title :</Label>
-                    <Input placeholder='Your Course Name' />
+                    <Input type="text" value={courseTitel} placeholder='Your Course Name' onChange={(e) => setCourseTitel(e.target.value)} />
                 </div>
                 <div className=''>
                     <Label>Category :</Label>
-                    <Select>
+                    <Select onValueChange={getSelectedCategory}>
                         <SelectTrigger className="w-[180px]">
                             <SelectValue placeholder="Select a category" />
                         </SelectTrigger>
@@ -45,7 +69,15 @@ const AddCourse = () => {
                 </div>
                 <div className=' flex items-center gap-3'>
                     <Button variant='outline' onClick={() => navigate(`/admin/course`)}>Back</Button>
-                    <Button>Create</Button>
+                    <Button disabled={isLoading} onClick={createCourseHandler}>
+                        {
+                            isLoading ? (
+                                <>
+                                    <Loader2 className=' mr-2 h-4 w-4 animate-spin' /> Please wait
+                                </>
+                            ) : "Create"
+                        }
+                    </Button>
                 </div>
             </div>
         </div>
